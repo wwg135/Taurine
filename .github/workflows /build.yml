@@ -7,6 +7,10 @@ on:
       - ".gitignore"
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   VERSION: '1.1.7b2'
  
@@ -56,7 +60,7 @@ jobs:
           set -x
           export THEOS=$HOME/theos
           gmake -j$(sysctl -n hw.physicalcpu)
-          mv Taurine/Taurine.tipa Taurine.ipa
+          mv Taurine/Taurine.ipa Taurine.ipa
 
       - name: Release ipa
         uses: softprops/action-gh-release@v1
