@@ -49,15 +49,15 @@ jobs:
           echo -e "[点击当前版本下载](https://github.com/wwg135/Taurine/releases/download/${{ env.msT }}/Taurine.ipa)" >> body.txt
           echo -e "\n更新时间：${{ env.logT }}" >> body.txt
           echo -e "\n**当前更新日志如下：**" >> body.txt
-          echo -e "\n> - 同步官方更新" >> body.txt
+          echo -e "\n> - 同步官方最新代码更新" >> body.txt
       
       - name: Build ipa
         run: |
           set -x
           export THEOS=$HOME/theos
           gmake -j$(sysctl -n hw.physicalcpu)
-          cd output
-          zip -r ../${{github.workflow}}.ipa
+          cd build/Build/Products/Release-iphoneos
+          zip -r9 ../../Taurine.ipa Taurine.app
 
       - name: Release ipa
         uses: softprops/action-gh-release@v1
